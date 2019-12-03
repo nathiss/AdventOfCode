@@ -1,11 +1,10 @@
 #include <fstream>
 #include <iostream>
 #include <stdexcept>
+#include <utility>
 #include <vector>
 
-int run_stage1(std::vector<int> program) {
-  program[1] = 12;
-  program[2] = 2;
+int run_program(std::vector<int> program) {
   std::size_t rip{0};
 
   for (;;) {
@@ -37,6 +36,31 @@ int run_stage1(std::vector<int> program) {
   throw std::runtime_error{"Didn't read the '99' opcode."};
 }
 
+int run_stage1(std::vector<int> program) {
+  program[1] = 12;
+  program[2] = 2;
+
+  return run_program(std::move(program));
+}
+
+int run_stage2(std::vector<int> program) {
+  for (int noun = 0; noun < 100; noun++) {
+    for (int verb = 0; verb < 100; verb++) {
+      decltype(program) tmp{program};
+      tmp[1] = noun;
+      tmp[2] = verb;
+      try {
+        const auto result = run_program(std::move(tmp));
+        if (result == 19690720) {
+          return 100 * noun + verb;
+        }
+      } catch (const std::runtime_error& e) {}
+    }
+  }
+
+  throw std::runtime_error{"No combination produced '19690720'."};
+}
+
 int main() {
   std::ifstream input_file("./input.txt");
   if (not input_file.good()) {
@@ -53,6 +77,7 @@ int main() {
   }
 
   std::cout << "[Stage1] Position 0 value: " << run_stage1(program) << std::endl;
+  std::cout << "[Stage2] Position 0 value: " << run_stage2(program) << std::endl;
 
   return 0;
 }
