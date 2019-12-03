@@ -4,3 +4,4 @@ set(This AdventOfCode2019)
 project(${This} LANGUAGES CXX)
 
 add_subdirectory(day01/cpp)
+add_subdirectory(day02/cpp)
