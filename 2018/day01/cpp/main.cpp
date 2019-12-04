@@ -25,7 +25,7 @@ std::int64_t stage2(const std::vector<int>& changes) {
       frequencies.insert(last);
     }
   }
-  throw std::runtime_error{"No change that this line of code would be ever executed."};
+  throw std::runtime_error{"No chance that this line of code would be ever executed."};
 }
 
 int main() {
