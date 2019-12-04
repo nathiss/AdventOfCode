@@ -1,7 +1,7 @@
-set(This CrossedWires)
+set(This 1202ProgramAlarm)
 project(${This})
 
-set(OutputDir day03)
+set(OutputDir ${Year}/day02)
 
 set(Sources
   main.cpp
@@ -16,7 +16,4 @@ configure_file(
 add_executable(${This} ${Sources})
 set_target_properties(${This} PROPERTIES
   RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${OutputDir}"
-)
-target_compile_features(${This}
-  PUBLIC cxx_std_17
 )

@@ -1,9 +1,4 @@
 cmake_minimum_required(VERSION 3.10)
+project(AdventOfCode LANGUAGES CXX)
 
-set(This AdventOfCode2019)
-project(${This} LANGUAGES CXX)
-
-add_subdirectory(day01/cpp)
-add_subdirectory(day02/cpp)
-add_subdirectory(day03/cpp)
-add_subdirectory(day04/cpp)
+add_subdirectory(2019)

@@ -1,12 +1,14 @@
-# AdventOfCode2019
+# AdventOfCode
 
 [https://adventofcode.com/](https://adventofcode.com/)
 
 ## Solutions
 
-| #  | Name                                                          | C++                               | Python                               |
-|:--:|:-------------------------------------------------------------:|:---------------------------------:|:------------------------------------:|
-| 01 | [The Tyranny of the Rocket Equation](./day01)                 | [:heavy_check_mark:](./day01/cpp) | [:heavy_check_mark:](./day01/python) |
-| 02 | [1202 Program Alarm](./day02)                                 | [:heavy_check_mark:](./day02/cpp) | [:heavy_check_mark:](./day02/python) |
-| 03 | [Crossed Wires](./day03)                                      | [:heavy_check_mark:](./day03/cpp) | [:heavy_check_mark:](./day03/python) |
-| 04 | [Secure Container](./day04)                                   | [:heavy_check_mark:](./day04/cpp) | [:heavy_check_mark:](./day04/python) |
+### Year 2019
+
+| #  | Name                                                      | C++                                    | Python                                    |
+|:--:|:---------------------------------------------------------:|:--------------------------------------:|:-----------------------------------------:|
+| 01 | [The Tyranny of the Rocket Equation](./2019/day01)        | [:heavy_check_mark:](./2019/day01/cpp) | [:heavy_check_mark:](./2019/day01/python) |
+| 02 | [1202 Program Alarm](./2019/day02)                        | [:heavy_check_mark:](./2019/day02/cpp) | [:heavy_check_mark:](./2019/day02/python) |
+| 03 | [Crossed Wires](./2019/day03)                             | [:heavy_check_mark:](./2019/day03/cpp) | [:heavy_check_mark:](./2019/day03/python) |
+| 04 | [Secure Container](./2019/day04)                          | [:heavy_check_mark:](./2019/day04/cpp) | [:heavy_check_mark:](./2019/day04/python) |

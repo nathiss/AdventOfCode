@@ -1,10 +1,16 @@
-set(This SecureContainer)
+set(This TheTyrannyOfTheRocketEquation)
 project(${This})
 
-set(OutputDir day04)
+set(OutputDir ${Year}/day01)
 
 set(Sources
   main.cpp
+)
+
+configure_file(
+  ${CMAKE_CURRENT_SOURCE_DIR}/input.txt
+  ${CMAKE_BINARY_DIR}/${OutputDir}
+  COPYONLY
 )
 
 add_executable(${This} ${Sources})

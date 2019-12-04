@@ -1,16 +1,10 @@
-set(This 1202ProgramAlarm)
+set(This SecureContainer)
 project(${This})
 
-set(OutputDir day02)
+set(OutputDir ${Year}/day04)
 
 set(Sources
   main.cpp
-)
-
-configure_file(
-  ${CMAKE_CURRENT_SOURCE_DIR}/input.txt
-  ${CMAKE_BINARY_DIR}/${OutputDir}
-  COPYONLY
 )
 
 add_executable(${This} ${Sources})

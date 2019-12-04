@@ -1,7 +1,7 @@
-set(This TheTyrannyOfTheRocketEquation)
+set(This CrossedWires)
 project(${This})
 
-set(OutputDir day01)
+set(OutputDir ${Year}/day03)
 
 set(Sources
   main.cpp
@@ -16,4 +16,7 @@ configure_file(
 add_executable(${This} ${Sources})
 set_target_properties(${This} PROPERTIES
   RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${OutputDir}"
+)
+target_compile_features(${This}
+  PUBLIC cxx_std_17
 )
