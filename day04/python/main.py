@@ -4,27 +4,27 @@ first = 158126
 last = 624574
 
 def hasDouble(i):
-  s = str(i)
-  for idx in range(len(s) - 1):
-    if s[idx] == s[idx+1]:
+  current = i % 10
+  while i > 0:
+    i = i // 10
+    if i % 10 == current:
       return True
+    current = i % 10
   return False
 
 
 def hasDoubleNotTriple(i):
-  s = str(i)
-  current = s[0]
-  c = [[current, 1]]
-  for idx in range(1, len(s)):
-    if s[idx] == current:
-      c[-1][1] += 1
-    else:
-      c.append([s[idx], 1])
-      current = s[idx]
-
-  for set in c:
-    if set[1] == 2:
+  current = i % 10
+  count = 1
+  while i > 0:
+    i = i // 10
+    if i % 10 == current:
+      count += 1
+      continue
+    if count == 2:
       return True
+    current = i % 10
+    count = 1
   return False
 
 
