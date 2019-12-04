@@ -5,5 +5,5 @@ project(${This} LANGUAGES CXX)
 
 add_subdirectory(day01/cpp)
 add_subdirectory(day02/cpp)
-
+add_subdirectory(day03/cpp)
 add_subdirectory(day04/cpp)
