@@ -49,7 +49,7 @@ int main() {
   }
 
   std::cout << "[Stage1] Sum of frequencies: " << stage1(changes) << std::endl;
-  std::cout << "[Stage2] Sum of frequencies: " << stage2(changes) << std::endl;
+  std::cout << "[Stage2] First double frequency: " << stage2(changes) << std::endl;
 
   return 0;
 }
