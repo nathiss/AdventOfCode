@@ -77,6 +77,15 @@ std::size_t stage1(const T& intersections) {
   return *std::min_element(distances.begin(), distances.end());
 }
 
+template <typename T>
+std::size_t stage2(const Wire& w1, const Wire& w2, const T& intersections) {
+  std::vector<std::size_t> distances;
+  for (const auto& intersection : intersections) {
+    distances.push_back(w1.at(intersection) + w2.at(intersection));
+  }
+  return *std::min_element(distances.begin(), distances.end());
+}
+
 int main() {
   std::ifstream input_file("./input.txt");
 
@@ -91,6 +100,9 @@ int main() {
 
   std::cout << "[Stage1] Distance to the closest intersection: "
     << stage1(intersections) << std::endl;
+
+  std::cout << "[Stage2] Sum of wires' distances to the closest intersection: "
+    << stage2(wire1, wire2, intersections) << std::endl;
 
 
   return 0;
