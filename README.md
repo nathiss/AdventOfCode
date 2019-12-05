@@ -9,6 +9,7 @@
 | #  | Name                                                      | C++                                    | Python                                    |
 |:--:|:---------------------------------------------------------:|:--------------------------------------:|:-----------------------------------------:|
 | 01 | [Chronal Calibration](./2018/day01)                       | [:heavy_check_mark:](./2018/day01/cpp) | [:heavy_check_mark:](./2018/day01/python) |
+| 02 | [Inventory Management System](./2018/day02)               |  | [:heavy_check_mark:](./2018/day02/python) |
 
 ### Year 2019
 
