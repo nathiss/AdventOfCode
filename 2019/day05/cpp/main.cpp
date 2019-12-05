@@ -45,7 +45,7 @@ void run_program(std::vector<int> program, int value) {
           program[program[rip + 1]] : program[rip + 1];
         const int value_2 = modes[1] == ParameterMode::POSITION ?
             program[program[rip + 2]] : program[rip + 2];
-        // ignore parameters mode for the output
+        // ignore parameter mode for the output
         program[program[rip + 3]] = value_1 + value_2;
         rip += 4;
         break;
@@ -57,7 +57,7 @@ void run_program(std::vector<int> program, int value) {
           program[program[rip + 1]] : program[rip + 1];
         const int value_2 = modes[1] == ParameterMode::POSITION ?
             program[program[rip + 2]] : program[rip + 2];
-        // ignore parameters mode for the output
+        // ignore parameter mode for the output
         program[program[rip + 3]] = value_1 * value_2;
         rip += 4;
         break;
@@ -65,7 +65,7 @@ void run_program(std::vector<int> program, int value) {
 
       // input
       case 3: {
-        // ignore the parameters mode for output address
+        // ignore the parameter mode for output address
         program[program[rip + 1]] = value;
         rip += 2;
         break;
