@@ -5,6 +5,7 @@
 #include <fstream>
 #include <vector>
 #include <array>
+#include <sstream>
 #include <tuple>
 #include <stdexcept>
 
@@ -33,15 +34,16 @@ std::tuple<std::array<ParameterMode, 3>, int> parse_opcode(int instruction) {
   return std::make_tuple(modes, opcode);
 }
 
-void run_program(std::vector<int> program) {
+void run_program(std::vector<int> program, int value) {
   std::size_t rip{};
   for (;;) {
     const auto [modes, opcode] = parse_opcode(program[rip]);
     switch (opcode) {
+      // add
       case 1: {
-        const auto value_1 = modes[0] == ParameterMode::POSITION ?
+        const int value_1 = modes[0] == ParameterMode::POSITION ?
           program[program[rip + 1]] : program[rip + 1];
-        const auto value_2 = modes[1] == ParameterMode::POSITION ?
+        const int value_2 = modes[1] == ParameterMode::POSITION ?
             program[program[rip + 2]] : program[rip + 2];
         // ignore parameters mode for the output
         program[program[rip + 3]] = value_1 + value_2;
@@ -49,10 +51,11 @@ void run_program(std::vector<int> program) {
         break;
       }
 
+      // multiply
       case 2: {
-        const auto value_1 = modes[0] == ParameterMode::POSITION ?
+        const int value_1 = modes[0] == ParameterMode::POSITION ?
           program[program[rip + 1]] : program[rip + 1];
-        const auto value_2 = modes[1] == ParameterMode::POSITION ?
+        const int value_2 = modes[1] == ParameterMode::POSITION ?
             program[program[rip + 2]] : program[rip + 2];
         // ignore parameters mode for the output
         program[program[rip + 3]] = value_1 * value_2;
@@ -60,16 +63,15 @@ void run_program(std::vector<int> program) {
         break;
       }
 
-
+      // input
       case 3: {
-        int value;
-        std::cin >> value;
         // ignore the parameters mode for output address
         program[program[rip + 1]] = value;
         rip += 2;
         break;
       }
 
+      // output
       case 4:
         if (modes[0] == ParameterMode::POSITION) {
           std::cout << program[program[rip + 1]] << std::endl;
@@ -80,11 +82,67 @@ void run_program(std::vector<int> program) {
         rip += 2;
         break;
 
+      // jump-if-true
+      case 5: {
+        const int value_1 = modes[0] == ParameterMode::POSITION ?
+          program[program[rip + 1]] : program[rip + 1];
+        const int value_2 = modes[1] == ParameterMode::POSITION ?
+          program[program[rip + 2]] : program[rip + 2];
+        if (value_1 != 0) {
+          rip = value_2;
+        } else {
+          rip += 3;
+        }
+        break;
+      }
+
+      // jump-if-false
+      case 6: {
+        const int value_1 = modes[0] == ParameterMode::POSITION ?
+          program[program[rip + 1]] : program[rip + 1];
+        const int value_2 = modes[1] == ParameterMode::POSITION ?
+          program[program[rip + 2]] : program[rip + 2];
+        if (value_1 == 0) {
+          rip = value_2;
+        } else {
+          rip += 3;
+        }
+        break;
+      }
+
+      // less than
+      case 7: {
+        const int value_1 = modes[0] == ParameterMode::POSITION ?
+          program[program[rip + 1]] : program[rip + 1];
+        const int value_2 = modes[1] == ParameterMode::POSITION ?
+          program[program[rip + 2]] : program[rip + 2];
+        // ignore parameter mode for the output parameter.
+        program[program[rip + 3]] = value_1 < value_2 ? 1 : 0;
+        rip += 4;
+        break;
+      }
+
+      // equals
+      case 8: {
+        const int value_1 = modes[0] == ParameterMode::POSITION ?
+          program[program[rip + 1]] : program[rip + 1];
+        const int value_2 = modes[1] == ParameterMode::POSITION ?
+          program[program[rip + 2]] : program[rip + 2];
+        // ignore parameter mode for the output parameter.
+        program[program[rip + 3]] = value_1 == value_2 ? 1 : 0;
+        rip += 4;
+        break;
+      }
+
+      // return
       case 99:
         return;
 
-      default:
-        throw std::runtime_error{"Read unknown opcode."};
+      default: {
+        std::stringstream ss{"Readm unknown opcode: "};
+        ss << opcode << '.';
+        throw std::runtime_error{ss.str()};
+      }
     }
   }
 }
@@ -104,7 +162,10 @@ int main() {
       input_file.get();
   }
 
-  run_program(program);
+  std::cout << "=============[Stage1]==============: \n\n";
+  run_program(program, 1);
+  std::cout << "\n=============[Stage2]==============: \n\n";
+  run_program(program, 5);
 
   return 0;
 }
