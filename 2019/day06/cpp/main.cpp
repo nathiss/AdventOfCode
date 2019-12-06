@@ -18,11 +18,9 @@ struct Object {
   // =====================================================================
 
   bool has_child(const std::string& n) const noexcept {
-    for (auto ch : childs) {
-      if (ch->name == n)
-        return true;
-    }
-    return false;
+    return std::any_of(childs.begin(), childs.end(), [&n](auto child) {
+      return child->name == n;
+    });
   }
 
   bool insert(const std::string& orbitee, const std::string& orbiter) {
@@ -32,11 +30,9 @@ struct Object {
       }
       return true;
     }
-    for (auto ch : childs) {
-      if (ch->insert(orbitee, orbiter))
-        return true;
-    }
-    return false;
+    return std::any_of(childs.begin(), childs.end(), [&orbitee, &orbiter](auto ch) {
+      return ch->insert(orbitee, orbiter);
+    });
   }
 
   std::size_t direct_orbits() const noexcept {
@@ -49,28 +45,30 @@ struct Object {
   }
 
   std::int64_t indirect_orbits(std::int64_t depth = 0) const noexcept {
-    std::int64_t indirects{depth - 1};
+    std::int64_t indirects{depth - 1};  // do not count direct to the parent
     if (this->childs.empty())
       return indirects;
     for (auto child : childs) {
       indirects += child->indirect_orbits(depth + 1);
     }
     if (this->name == "COM")
-      indirects++;
+      indirects++;  // the COM has no parent
     return indirects;
   }
 
   std::vector<std::string> orbital_transfers_to(const std::string& n, std::vector<std::string> path = {}) {
-    path.push_back(this->name);
     if (this->childs.empty()) {
       return {};
     }
+
+    path.push_back(this->name);
     if (this->has_child(n))
       return path;
     for (auto child : childs) {
       if (auto ret = child->orbital_transfers_to(n, path); ret != decltype(ret){})
         return ret;
     }
+
     return {};
   }
 };
@@ -85,6 +83,7 @@ int main() {
   std::vector<std::pair<std::string, std::string>> list;
   std::string line;
   while (input_file >> line) {
+    // symtax: "XXX)YYY"
     std::string orbitee{line.c_str(), 3};
     std::string orbiter{line.c_str() + 4, 3};
     list.emplace_back(std::move(orbitee), std::move(orbiter));
@@ -113,8 +112,11 @@ int main() {
   const auto santa = com->orbital_transfers_to("SAN");
 
   auto [mis1, mis2] = std::mismatch(you.begin(), you.end(), santa.begin(), santa.end());
+
+  // do not count YOU, but the object that YOU's orbiting.
   const auto me_to_junction = std::abs(std::distance(mis1, you.end())) - 1;
   const auto santa_to_junction = std::abs(std::distance(mis2, santa.end()));
+  // The '1' represents the junction connecting the two paths.
   const auto dis = me_to_junction + santa_to_junction + 1;
   std::cout << "[Stage2] Distance from me to Santa: " << dis << std::endl;
 
