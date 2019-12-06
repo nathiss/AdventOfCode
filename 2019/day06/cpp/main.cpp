@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <iostream>
 #include <fstream>
 #include <memory>
@@ -58,6 +59,20 @@ struct Object {
       indirects++;
     return indirects;
   }
+
+  std::vector<std::string> orbital_transfers_to(const std::string& n, std::vector<std::string> path = {}) {
+    path.push_back(this->name);
+    if (this->childs.empty()) {
+      return {};
+    }
+    if (this->has_child(n))
+      return path;
+    for (auto child : childs) {
+      if (auto ret = child->orbital_transfers_to(n, path); ret != decltype(ret){})
+        return ret;
+    }
+    return {};
+  }
 };
 
 int main() {
@@ -75,7 +90,7 @@ int main() {
     list.emplace_back(std::move(orbitee), std::move(orbiter));
   }
 
-  std::cout << "Building the space....\n";
+  std::cout << "Building the space up....\n";
   auto com = std::make_shared<Object>("COM");
   for (auto it = list.begin(); !list.empty();) {
     if (it == list.end())
@@ -85,14 +100,23 @@ int main() {
     } else {
       it++;
     }
-
   }
 
-  auto d = com->direct_orbits();
-  auto i = com->indirect_orbits();
+  const auto d = com->direct_orbits();
+  const auto i = com->indirect_orbits();
   std::cout << "[Stage1] Direct orbits: " << d << '\n'
     << "[Stage1] Indirect orbits: " << i << '\n'
     << "[Stage1] The Directs + The Indirects: " << d + i << std::endl;
+
+
+  const auto you = com->orbital_transfers_to("YOU");
+  const auto santa = com->orbital_transfers_to("SAN");
+
+  auto [mis1, mis2] = std::mismatch(you.begin(), you.end(), santa.begin(), santa.end());
+  const auto me_to_junction = std::abs(std::distance(mis1, you.end())) - 1;
+  const auto santa_to_junction = std::abs(std::distance(mis2, santa.end()));
+  const auto dis = me_to_junction + santa_to_junction + 1;
+  std::cout << "[Stage2] Distance from me to Santa: " << dis << std::endl;
 
   return 0;
 }
