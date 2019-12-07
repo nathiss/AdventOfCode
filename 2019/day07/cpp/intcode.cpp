@@ -3,7 +3,8 @@
 #include <algorithm>
 #include <sstream>
 
-std::tuple<std::array<ParameterMode, 3>, int> parse_opcode(int instruction) {
+std::tuple<std::array<Computer::ParameterMode, 3>, int>
+Computer::parse_opcode(int instruction) {
   const auto opcode = instruction % 100;
   std::array<ParameterMode, 3> modes{};
 
@@ -22,9 +23,7 @@ std::tuple<std::array<ParameterMode, 3>, int> parse_opcode(int instruction) {
   return std::make_tuple(modes, opcode);
 }
 
-std::vector<int> run_program(std::vector<int> program, std::vector<int> input) {
-  std::vector<int> output;
-  std::size_t rip{};
+bool Computer::run() {
   for (;;) {
     const auto [modes, opcode] = parse_opcode(program[rip]);
     switch (opcode) {
@@ -56,10 +55,10 @@ std::vector<int> run_program(std::vector<int> program, std::vector<int> input) {
       case 3: {
         // ignore the parameter mode for output address
         if (input.empty()) {
-          throw std::runtime_error{"Not enough input values."};
+          return false;
         }
         program[program[rip + 1]] = input.front();
-        input.erase(input.begin());
+        input.pop();
         rip += 2;
         break;
       }
@@ -67,10 +66,10 @@ std::vector<int> run_program(std::vector<int> program, std::vector<int> input) {
       // output
       case 4:
         if (modes[0] == ParameterMode::POSITION) {
-          output.push_back(program[program[rip + 1]]);
+          output.push(program[program[rip + 1]]);
         }
         if (modes[0] == ParameterMode::IMMEDIATE) {
-          output.push_back(program[rip + 1]);
+          output.push(program[rip + 1]);
         }
         rip += 2;
         break;
@@ -129,7 +128,7 @@ std::vector<int> run_program(std::vector<int> program, std::vector<int> input) {
 
       // return
       case 99:
-        return output;
+        return true;
 
       default: {
         std::stringstream ss{"Readm unknown opcode: "};
