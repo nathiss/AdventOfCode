@@ -20,4 +20,5 @@
 | 03 | [Crossed Wires](./2019/day03)                             | [:heavy_check_mark:](./2019/day03/cpp) | [:heavy_check_mark:](./2019/day03/python) |
 | 04 | [Secure Container](./2019/day04)                          | [:heavy_check_mark:](./2019/day04/cpp) | [:heavy_check_mark:](./2019/day04/python) |
 | 05 | [Sunny with a Chance of Asteroids](./2019/day05)          | [:heavy_check_mark:](./2019/day05/cpp) | [:heavy_check_mark:](./2019/day05/python) |
-| 05 | [Universal Orbit Map](./2019/day06)                       | [:heavy_check_mark:](./2019/day06/cpp) |  |
+| 06 | [Universal Orbit Map](./2019/day06)                       | [:heavy_check_mark:](./2019/day06/cpp) |  |
+| 07 | [Amplification Circuit](./2019/day07)                     |  |  |
