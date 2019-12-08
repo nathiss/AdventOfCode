@@ -22,3 +22,4 @@
 | 05 | [Sunny with a Chance of Asteroids](./2019/day05)          | [:heavy_check_mark:](./2019/day05/cpp) | [:heavy_check_mark:](./2019/day05/python) |
 | 06 | [Universal Orbit Map](./2019/day06)                       | [:heavy_check_mark:](./2019/day06/cpp) |  |
 | 07 | [Amplification Circuit](./2019/day07)                     | [:heavy_check_mark:](./2019/day07/cpp) |  |
+| 08 | [Space Image Format](./2019/day08)                        |  |  |
