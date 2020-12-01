@@ -23,3 +23,9 @@
 | 06 | [Universal Orbit Map](./2019/day06)                       | [:heavy_check_mark:](./2019/day06/cpp) |  |
 | 07 | [Amplification Circuit](./2019/day07)                     | [:heavy_check_mark:](./2019/day07/cpp) |  |
 | 08 | [Space Image Format](./2019/day08)                        | [:heavy_check_mark:](./2019/day08/cpp) |  |
+
+### Year 2020
+
+| #  | Name                                                      | Python                                    |
+|:--:|:---------------------------------------------------------:|:-----------------------------------------:|
+| 01 | [Report Repair](./2020/day01)                             | [:heavy_check_mark:](./2020/day01/python) |
